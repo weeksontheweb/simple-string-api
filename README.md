@@ -11,11 +11,11 @@ This project currently has 2 methods of string manipulation.
 ### 1.1. Summary
 Returns a string in the JSON format, which is the reverse of the string passed to it.
 ### 1.2. Syntax
-```http://localhost:12345/reverse-string/*<string to parse>*```
+```http://localhost:12345/reverse-string/<string to parse>```
 ### 1.3. Example
 ```http://localhost:12345/reverse-string/gopher```
 
-Returns:
+Returns the following JSON:
 
 ```{"reversedstring":"rehpog"}```
 
@@ -23,10 +23,10 @@ Returns:
 ### 2.1. Summary
 Returns a string in the JSON format, where each character returned is the next one on in the ASCII character set to the string passed to it.
 ### 2.2. Syntax
-```http://localhost:12345/next-in-ascii/*<string to parse>*```
+```http://localhost:12345/next-in-ascii/<string to parse>```
 ### 2.3. Example
 ```http://localhost:12345/next-in-ascii/gopher```
 
-Returns:
+Returns the following JSON:
 
 ```{"nextinasciistring":"hpqifs"}```
