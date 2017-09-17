@@ -6,6 +6,7 @@ This project currently has 2 methods of string manipulation.
 
 - reverse-string
 - next-in-ascii
+- previous-in-ascii
 
 ## 1. reverse-string
 ### 1.1. Summary
