@@ -1,8 +1,6 @@
 package main
 
 import (
-	//"fmt"
-	//"encoding/json"
 	"log"
 	"net/http"
 	"github.com/gorilla/mux"
@@ -13,27 +11,11 @@ type ReverseString struct {
 	ReversedString string `json:"reversedstring"`
 }
 
-/*
-func CreatePersonEndpoint(w http.ResponseWriter, req *http.Request) {
-	params := mux.Vars(req)
-	var person Person
-	_ = json.NewDecoder(req.Body).Decode(&person)
-	person.ID = params["id"]
-	people = append(people, person)
-	json.NewEncoder(w).Encode(people)
+type UpscaleString struct {
+	UpscaledString string `json:"upscaledstring"`
 }
 
-func DeletePersonEndpoint(w http.ResponseWriter, req *http.Request) {
-	params := mux.Vars(req)
-	for index, item := range people {
-		if item.ID == params["id"] {
-			people = append(people[:index], people[index+1:]...)
-			break
-		}
-	}
-	json.NewEncoder(w).Encode(people)
-}
-*/
+//Reverses the input string.
 func ToReverseEndPoint(w http.ResponseWriter, req *http.Request) {
 
 	var originalString string
@@ -67,13 +49,33 @@ func ToReverseEndPoint(w http.ResponseWriter, req *http.Request) {
 	json.NewEncoder(w).Encode(reverseString)
 }
 
+//Converts each character in the input string to the next ASCII value.
+func NextInAlphabetEndPoint(w http.ResponseWriter, req *http.Request) {
+
+	var upscaledString string
+
+	params := mux.Vars(req)
+
+	//Convert the word passed in the URL to an ASCII array
+	byteArray := []byte(params["toUpscale"])
+
+	//Traverse through string, character by character.
+	for i, _ := range byteArray {
+
+		upscaledString = upscaledString + string(byteArray[i] + 1)
+	}
+
+	//Create an instance of the UpscaleString struct and load it.
+	upscaleString := UpscaleString{UpscaledString: upscaledString}
+
+	json.NewEncoder(w).Encode(upscaleString)
+}
 
 func main() {
 	router := mux.NewRouter()
 
 	router.HandleFunc("/reverse-string/{toReverse}", ToReverseEndPoint).Methods("GET")
-	//router.HandleFunc("/people/{id}", GetPersonEndpoint).Methods("GET")
-	//router.HandleFunc("/people/{id}", CreatePersonEndpoint).Methods("POST")
-	//router.HandleFunc("/people/{id}", DeletePersonEndpoint).Methods("DELETE")
+	router.HandleFunc("/next-in-alphabet/{toUpscale}", NextInAlphabetEndPoint).Methods("GET")
+
 	log.Fatal(http.ListenAndServe(":12345", router))
 }
