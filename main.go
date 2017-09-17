@@ -15,6 +15,10 @@ type NextInAsciiString struct {
 	NextInAsciiDoneString string `json:"nextinasciistring"`
 }
 
+type PreviousInAsciiString struct {
+	PreviousInAsciiDoneString string `json:"previousinasciistring"`
+}
+
 //Reverses the input string.
 func ToReverseEndPoint(w http.ResponseWriter, req *http.Request) {
 
@@ -71,11 +75,34 @@ func NextInAsciiEndPoint(w http.ResponseWriter, req *http.Request) {
 	json.NewEncoder(w).Encode(nextInAsciiString)
 }
 
+//Converts each character in the input string to the next ASCII value.
+func PreviousInAsciiEndPoint(w http.ResponseWriter, req *http.Request) {
+
+	var downscaledString string
+
+	params := mux.Vars(req)
+
+	//Convert the word passed in the URL to an ASCII array
+	byteArray := []byte(params["toDownscale"])
+
+	//Traverse through string, character by character.
+	for i, _ := range byteArray {
+
+		downscaledString = downscaledString + string(byteArray[i] - 1)
+	}
+
+	//Create an instance of the UpscaleString struct and load it.
+	previousInAsciiString := PreviousInAsciiString{PreviousInAsciiDoneString: downscaledString}
+
+	json.NewEncoder(w).Encode(previousInAsciiString)
+}
+
 func main() {
 	router := mux.NewRouter()
 
 	router.HandleFunc("/reverse-string/{toReverse}", ToReverseEndPoint).Methods("GET")
 	router.HandleFunc("/next-in-ascii/{toUpscale}", NextInAsciiEndPoint).Methods("GET")
+	router.HandleFunc("/previous-in-ascii/{toDownscale}", PreviousInAsciiEndPoint).Methods("GET")
 
 	log.Fatal(http.ListenAndServe(":12345", router))
 }

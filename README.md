@@ -30,3 +30,15 @@ Returns a string in the JSON format, where each character returned is the next o
 Returns the following JSON:
 
 ```{"nextinasciistring":"hpqifs"}```
+
+## 3. previous-in-ascii
+### 3.1. Summary
+Returns a string in the JSON format, where each character returned is the previous one in the ASCII character set to the string passed to it.
+### 3.2. Syntax
+```http://localhost:12345/previous-in-ascii/<string to parse>```
+### 3.3. Example
+```http://localhost:12345/previous-in-ascii/gopher```
+
+Returns the following JSON:
+
+```{"previousinasciistring":"fnogdq"}```
