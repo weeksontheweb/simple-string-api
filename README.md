@@ -1,4 +1,4 @@
-# simple_string_api
+# simple-string-api
 
 An experiment to get familiar with creating Golang APIs, and deals with string manipulation, as a means to get comfortable with using slices.
 
